@@ -2,192 +2,959 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CattoLoL - Unblocked Games Hub</title>
-
-  <!-- ── FAVICON ── -->
-  <link rel="icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="https://github.com/kyro-scripts/cattolol/blob/main/CattoLoL%20(9).png?raw=true" />
-  <link rel="apple-touch-icon" href="https://github.com/kyro-scripts/cattolol/blob/main/CattoLoL%20(9).png?raw=truee" />
-
-  <!-- ── EMBED META (Discord, iMessage, Twitter previews) ── -->
-  <meta property="og:title" content="CattoLoL - Unblocked Games Hub" />
-  <meta property="og:description" content="60+ unblocked games. Bypasses GoGuardian, Securly & Lightspeed." />
-  <meta property="og:image" content="https://github.com/kyro-scripts/cattolol/blob/main/1.png?raw=true" />
-  <meta property="og:url" content="https://kyro-scripts.github.io/cattolol/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="CattoLoL - Unblocked Games Hub" />
-  <meta name="twitter:description" content="60+ unblocked games. Bypasses GoGuardian, Securly, Lightspeed, & Hundreds More" />
-  <meta name="twitter:image" content="https://github.com/kyro-scripts/cattolol/blob/main/1.png?raw=true" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,900;1,700;1,900&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>thehub</title>
+  <meta name="description" content="Shortcuts, AI prompts, tools, apps, and everything else you need. All in one place." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #f7f7f8;
+      --fg: #0d0d12;
+      --card: #ffffff;
+      --card-fg: #0d0d12;
+      --muted: #f0f0f3;
+      --muted-fg: #6b7280;
+      --border: #e5e5ea;
+      --primary: #6366f1;
+      --accent: #10d9b0;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Inter', sans-serif;
-      background: #000;
-      color: #fff;
-      min-height: 100vh;
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── HERO ── */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 60vh;
-      min-height: 350px;
-      overflow: hidden;
-    }
-    .hero img {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-    }
-    .hero-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0.35);
-    }
-
-    /* ── FEATURE CARDS ── */
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-    .feature-card {
-      position: relative;
-      border-radius: 1rem;
-      overflow: hidden;
-      aspect-ratio: 16/9;
-    }
-    .feature-card img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.4s;
-    }
-    .feature-card:hover img { transform: scale(1.05); }
-    .feature-card .card-overlay {
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,0.08);
-      transition: background 0.3s;
-    }
-    .feature-card:hover .card-overlay { background: rgba(0,0,0,0.18); }
-
-    /* ── LINKS SECTION ── */
-    .links-section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-    }
-    .links-section h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      font-style: italic;
-      text-align: center;
-      margin-bottom: 0.5rem;
-    }
-    .links-section .subtitle {
-      text-align: center;
-      color: #777;
-      font-size: 0.85rem;
-      margin-bottom: 2.5rem;
-    }
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-    .link-card {
+    /* ── NAVBAR ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      background: #0f0f0f;
-      border: 1px solid #222;
-      border-radius: 0.75rem;
-      padding: 1rem 1.5rem;
-      text-decoration: none;
-      color: #fff;
-      transition: border-color 0.25s, background 0.25s, color 0.25s;
+      padding: 0 20px;
+      background: rgba(247,247,248,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .link-card:hover {
-      border-color: #d97706;
-      background: rgba(217,119,6,0.08);
-      color: #fbbf24;
-    }
-    .link-card span {
-      font-size: 1.05rem;
-      font-weight: 700;
-    }
-    .link-card svg {
-      flex-shrink: 0;
-      width: 18px; height: 18px;
-      stroke: #555;
-      transition: stroke 0.25s;
-    }
-    .link-card:hover svg { stroke: #fbbf24; }
 
-    footer {
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--fg);
+    }
+
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-icon svg { width: 16px; height: 16px; }
+
+    .nav-logo-text {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+
+    @media (min-width: 640px) { .nav-links { display: flex; } }
+
+    .nav-link {
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted-fg);
+      border-radius: 8px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .nav-link:hover { background: var(--muted); color: var(--fg); }
+
+    .nav-submit-btn {
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--fg);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .nav-submit-btn:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: var(--fg);
+      padding: 80px 24px 60px;
+    }
+
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .hero-orb-1 { width: 320px; height: 320px; top: 15%; left: -80px; background: rgba(99,102,241,0.35); }
+    .hero-orb-2 { width: 360px; height: 360px; bottom: 10%; right: -80px; background: rgba(16,217,176,0.25); }
+    .hero-orb-3 { width: 400px; height: 400px; top: 50%; left: 50%; transform: translate(-50%,-50%); background: rgba(99,102,241,0.12); }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
       text-align: center;
-      padding: 2rem;
-      color: #444;
-      font-size: 0.8rem;
-      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .hero-badge-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-h1 {
+      font-size: clamp(44px, 10vw, 80px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -2px;
+    }
+
+    .hero-h1-gradient {
+      background: linear-gradient(90deg, #fff, var(--accent), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.38);
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      margin-top: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: color 0.15s;
+    }
+    .hero-cta:hover { color: rgba(255,255,255,0.65); }
+
+    /* ── STICKY BAR ── */
+    .sticky-bar {
+      position: sticky;
+      top: 56px;
+      z-index: 80;
+      background: rgba(247,247,248,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding: 12px 20px;
+    }
+
+    .search-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px; height: 16px;
+      color: var(--muted-fg);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      height: 42px;
+      background: var(--muted);
+      border: none;
+      border-radius: 12px;
+      padding: 0 16px 0 38px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--fg);
+      outline: none;
+      transition: box-shadow 0.15s;
+    }
+    .search-input::placeholder { color: rgba(107,114,128,0.55); }
+    .search-input:focus { box-shadow: 0 0 0 2px rgba(99,102,241,0.25); }
+
+    .filter-bar {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+      flex-shrink: 0;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 100px;
+      border: none;
+      background: none;
+      color: var(--muted-fg);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-family: inherit;
+    }
+    .filter-btn:hover { background: var(--muted); color: var(--fg); }
+    .filter-btn.active { background: var(--fg); color: #fff; }
+
+    /* ── CONTENT ── */
+    .content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 64px;
+      scroll-margin-top: 130px;
+    }
+
+    .section-head { margin-bottom: 24px; }
+
+    .section-title {
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .section-sub {
+      margin-top: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted-fg);
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 500px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      color: var(--card-fg);
+      display: block;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card:hover {
+      border-color: rgba(99,102,241,0.3);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.08);
+      transform: translateY(-1px);
+    }
+    .card:active { transform: scale(0.99); }
+
+    .card-featured-star {
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 14px; height: 14px;
+      color: var(--accent);
+      fill: var(--accent);
+    }
+
+    .card-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 800;
+      background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(16,217,176,0.1));
+      color: var(--primary);
+      margin-bottom: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .card-icon img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.1px;
+      transition: color 0.15s;
+    }
+    .card:hover .card-title { color: var(--primary); }
+
+    .card-desc {
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted-fg);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 100px;
+      background: var(--muted);
+      color: var(--muted-fg);
+    }
+
+    .card-arrow {
+      margin-left: auto;
+      width: 14px; height: 14px;
+      color: rgba(107,114,128,0.4);
+      opacity: 0;
+      transition: opacity 0.15s;
+      flex-shrink: 0;
+    }
+    .card:hover .card-arrow { opacity: 1; }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      text-align: center;
+      padding: 80px 24px;
+    }
+    .empty-title { font-size: 15px; font-weight: 600; color: var(--muted-fg); }
+    .empty-sub { font-size: 12px; color: rgba(107,114,128,0.5); margin-top: 4px; }
+
+    /* ── MODAL (Submit) ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card);
+      border-radius: 24px 24px 0 0;
+      padding: 24px 24px 40px;
+      transform: translateY(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    @media (min-width: 640px) {
+      .modal-overlay { align-items: center; }
+      .modal { border-radius: 24px; max-height: 80vh; }
+      .modal.open { transform: none; }
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-handle {
+      width: 40px; height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      margin: 0 auto 20px;
+    }
+    @media (min-width: 640px) { .modal-handle { display: none; } }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .modal-title { font-size: 20px; font-weight: 900; letter-spacing: -0.4px; }
+    .modal-close {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--muted);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: var(--border); }
+
+    /* ── FORM ── */
+    .form-group { margin-bottom: 16px; }
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted-fg);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--muted);
+      border: none;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--fg);
+      outline: none;
+      transition: box-shadow 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      box-shadow: 0 0 0 2px rgba(99,102,241,0.25);
+    }
+    .form-textarea { resize: none; height: 90px; line-height: 1.5; }
+    .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+    .form-submit {
+      width: 100%;
+      height: 48px;
+      background: var(--fg);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { opacity: 0.85; }
+    .form-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--fg);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s, transform 0.25s;
+      white-space: nowrap;
+      z-index: 300;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── FOOTER ── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 640px) {
+      .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+    .footer-text {
+      font-size: 12px;
+      color: var(--muted-fg);
+      max-width: 360px;
+      line-height: 1.6;
+    }
+
+    /* ── SKELETON ── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--muted) 25%, var(--border) 50%, var(--muted) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton-card {
+      height: 140px;
+      border-radius: var(--radius);
     }
   </style>
 </head>
 <body>
 
-  <div class="hero">
-    <img src="https://github.com/kyro-scripts/cattolol/blob/main/1.png?raw=true" alt="CattoLoL" />
-    <div class="hero-overlay"></div>
+<!-- NAVBAR -->
+<nav class="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+      </svg>
+    </div>
+    <span class="nav-logo-text">thehub</span>
+  </a>
+
+  <div class="nav-links">
+    <button class="nav-link" onclick="scrollToSection('shortcuts')">Shortcuts</button>
+    <button class="nav-link" onclick="scrollToSection('ai_prompts')">AI Prompts</button>
+    <button class="nav-link" onclick="scrollToSection('tools')">Tools</button>
+    <button class="nav-link" onclick="scrollToSection('apps')">Apps</button>
   </div>
 
-  <div class="features">
-    <div class="feature-card">
-      <img src="https://github.com/kyro-scripts/cattolol/blob/main/5.png?raw=true" alt="60+ Games" />
-      <div class="card-overlay"></div>
+  <button class="nav-submit-btn" onclick="openModal()">Submit</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span class="hero-badge-text">Curated collection</span>
     </div>
-    <div class="feature-card">
-      <img src="https://github.com/kyro-scripts/cattolol/blob/main/6.png?raw=true" alt="Daily Updates" />
-      <div class="card-overlay"></div>
-    </div>
-    <div class="feature-card">
-      <img src="https://github.com/kyro-scripts/cattolol/blob/main/7.png?raw=true" alt="Always Unblocked" />
-      <div class="card-overlay"></div>
-    </div>
+    <h1 class="hero-h1">
+      Your digital<br>
+      <span class="hero-h1-gradient">toolkit.</span>
+    </h1>
+    <p class="hero-sub">
+      Shortcuts, AI prompts, tools, apps, and everything else you need. All in one place. No fluff.
+    </p>
+    <button class="hero-cta" onclick="scrollToSection('shortcuts')">
+      Browse collection
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+    </button>
   </div>
+</section>
 
-  <div class="links-section">
-    <h2>Unblocked Sites</h2>
-    <p class="subtitle">Click any link to visit.</p>
-
-    <div class="links-grid">
-
-      <a class="link-card" href="https://sites.google.com/view/lolcatto/home" target="_blank" rel="noopener">
-        <span>CattoLoL Main</span>
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6m0 0v6m0-6L10 14"/></svg>
-      </a>
-
-      <a class="link-card" href="https://sites.google.com/view/cattoxd/home?authuser=2" target="_blank" rel="noopener">
-        <span>CattoXD (old)</span>
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6m0 0v6m0-6L10 14"/></svg>
-      </a>
-
-      <a class="link-card" href="https://sites.google.com/view/cattolol/home?authuser=2" target="_blank" rel="noopener">
-        <span>CattoLoL "Clever"</span>
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6m0 0v6m0-6L10 14"/></svg>
-      </a>
-
-    </div>
+<!-- STICKY BAR -->
+<div class="sticky-bar">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" type="text" placeholder="Search resources..." oninput="onSearch(this.value)" />
   </div>
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+    <button class="filter-btn" onclick="setFilter('shortcuts', this)">Shortcuts</button>
+    <button class="filter-btn" onclick="setFilter('ai_prompts', this)">AI Prompts</button>
+    <button class="filter-btn" onclick="setFilter('websites', this)">Websites</button>
+    <button class="filter-btn" onclick="setFilter('tools', this)">Tools</button>
+    <button class="filter-btn" onclick="setFilter('products', this)">Products</button>
+    <button class="filter-btn" onclick="setFilter('apps', this)">Apps</button>
+  </div>
+</div>
 
-  <footer>CattoLoL &copy; 2025 — Changing Unblocked Games</footer>
+<!-- CONTENT -->
+<main class="content" id="mainContent"></main>
 
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="#" class="nav-logo" style="text-decoration:none; color:inherit;">
+      <div class="nav-logo-icon" style="width:28px;height:28px;">
+        <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+        </svg>
+      </div>
+      <span class="nav-logo-text" style="font-size:14px;">thehub</span>
+    </a>
+    <p class="footer-text">A curated collection of digital resources. Built for people who value their time.</p>
+  </div>
+</footer>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <h2 class="modal-title">Submit a resource</h2>
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <form id="submitForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input class="form-input" type="text" id="f-title" required placeholder="Resource name" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="f-category" required>
+          <option value="" disabled selected>Select a category</option>
+          <option value="shortcuts">Shortcuts</option>
+          <option value="ai_prompts">AI Prompts</option>
+          <option value="websites">Websites</option>
+          <option value="tools">Tools</option>
+          <option value="products">Products</option>
+          <option value="apps">Apps</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL</label>
+        <input class="form-input" type="url" id="f-url" placeholder="https://..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="f-desc" placeholder="What does it do? Why is it useful?"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags</label>
+        <input class="form-input" type="text" id="f-tags" placeholder="automation, free, productivity (comma separated)" />
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">Submit Resource</button>
+    </form>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── DATA ──
+  const RESOURCES = [
+    // SHORTCUTS
+    { id: 1, title: "Morning Routine Automator", description: "Turns off alarm, checks weather, reads your calendar, and texts your ETA. One tap.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["automation", "morning", "free"], featured: true },
+    { id: 2, title: "Batch Photo Resizer", description: "Select multiple photos and resize them all to a specific dimension instantly.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["photos", "productivity", "free"], featured: false },
+    { id: 3, title: "Quick Share to Notion", description: "Share any webpage, text, or image directly to your Notion database from the share sheet.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["notion", "productivity", "free"], featured: false },
+    { id: 4, title: "Water Intake Tracker", description: "Log your water intake with a single tap and get reminders throughout the day.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["health", "tracking", "free"], featured: false },
+    { id: 5, title: "Focus Mode Toggle", description: "Enable a custom focus mode, silence notifications, and launch your study playlist in one tap.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["focus", "productivity", "free"], featured: false },
+    { id: 6, title: "Low Battery Alert", description: "Automatically texts a chosen contact your location when your battery drops below 15%.", category: "shortcuts", url: "https://www.icloud.com/shortcuts", tags: ["automation", "safety", "free"], featured: false },
+    // AI PROMPTS
+    { id: 7, title: "Meeting Summarizer", description: "Paste your meeting transcript and get a structured summary with action items, decisions, and follow-ups.", category: "ai_prompts", tags: ["meetings", "productivity", "gpt"], featured: true },
+    { id: 8, title: "Code Reviewer", description: "Paste code and get a detailed review covering bugs, performance issues, and best practices.", category: "ai_prompts", tags: ["coding", "review", "gpt"], featured: false },
+    { id: 9, title: "Product Description Writer", description: "Generate compelling product descriptions from a few bullet points. Optimized for conversion.", category: "ai_prompts", tags: ["marketing", "copywriting", "gpt"], featured: false },
+    { id: 10, title: "Email Tone Adjuster", description: "Rewrite any email to match a specific tone: professional, casual, friendly, or urgent.", category: "ai_prompts", tags: ["email", "communication", "gpt"], featured: false },
+    { id: 11, title: "Explain Like I'm Five", description: "Paste any complex concept and get a crystal-clear explanation a ten-year-old could understand.", category: "ai_prompts", tags: ["learning", "clarity", "gpt"], featured: false },
+    { id: 12, title: "Resume Bullet Enhancer", description: "Transform weak resume bullet points into strong, quantified, action-oriented statements.", category: "ai_prompts", tags: ["career", "writing", "gpt"], featured: false },
+    // WEBSITES
+    { id: 13, title: "Perplexity", description: "AI-powered answer engine that provides cited, accurate responses to complex questions.", category: "websites", url: "https://perplexity.ai", tags: ["ai", "research", "search"], featured: true },
+    { id: 14, title: "Coolors", description: "Generate perfect color palettes in seconds. Essential for any design project.", category: "websites", url: "https://coolors.co", tags: ["design", "colors", "free"], featured: false },
+    { id: 15, title: "Hacker News", description: "The original tech community. Stay current on startups, engineering, and industry trends.", category: "websites", url: "https://news.ycombinator.com", tags: ["tech", "news", "community"], featured: false },
+    { id: 16, title: "Carbon", description: "Create beautiful images of your source code to share on social media.", category: "websites", url: "https://carbon.now.sh", tags: ["code", "design", "free"], featured: false },
+    { id: 17, title: "Regex101", description: "Build, test, and debug regular expressions in real time with detailed explanations.", category: "websites", url: "https://regex101.com", tags: ["coding", "tools", "free"], featured: false },
+    // TOOLS
+    { id: 18, title: "Raycast", description: "Spotlight replacement for Mac. Launch apps, run scripts, manage clipboard, and more.", category: "tools", url: "https://raycast.com", tags: ["mac", "productivity", "launcher"], featured: true },
+    { id: 19, title: "Arc Browser", description: "A browser that thinks differently. Spaces, split views, and built-in tools.", category: "tools", url: "https://arc.net", tags: ["browser", "productivity", "free"], featured: true },
+    { id: 20, title: "Excalidraw", description: "Virtual whiteboard for sketching hand-drawn like diagrams. Simple, fast, collaborative.", category: "tools", url: "https://excalidraw.com", tags: ["design", "whiteboard", "free"], featured: false },
+    { id: 21, title: "Linear", description: "Project management built for speed. Keyboard-first, beautiful, and fast.", category: "tools", url: "https://linear.app", tags: ["project-management", "team", "paid"], featured: false },
+    { id: 22, title: "Warp Terminal", description: "A modern terminal with AI command completion, collaboration, and a beautiful UI.", category: "tools", url: "https://warp.dev", tags: ["terminal", "mac", "developer"], featured: false },
+    // PRODUCTS
+    { id: 23, title: "AirPods Pro 2", description: "Best-in-class noise cancellation, spatial audio, and seamless Apple ecosystem integration.", category: "products", url: "https://apple.com/airpods-pro", tags: ["audio", "apple", "premium"], featured: true },
+    { id: 24, title: "Bellroy Slim Wallet", description: "Minimal leather wallet that holds everything without the bulk. Fits in any pocket.", category: "products", url: "https://bellroy.com", tags: ["edc", "minimal", "leather"], featured: false },
+    { id: 25, title: "Peak Design Phone Case", description: "The most versatile iPhone case. Connects to a whole ecosystem of mounts and accessories.", category: "products", url: "https://peakdesign.com", tags: ["iphone", "gear", "premium"], featured: false },
+    { id: 26, title: "MagSafe Battery Pack", description: "Snap-on wireless charging that fits perfectly in your pocket. No cables needed.", category: "products", url: "https://apple.com", tags: ["apple", "battery", "wireless"], featured: false },
+    // APPS
+    { id: 27, title: "Notion", description: "All-in-one workspace for notes, docs, wikis, and project management.", category: "apps", url: "https://notion.so", tags: ["productivity", "notes", "freemium"], featured: true },
+    { id: 28, title: "Things 3", description: "The gold standard of task management on Apple platforms. Clean, focused, powerful.", category: "apps", url: "https://culturedcode.com/things", tags: ["tasks", "apple", "paid"], featured: true },
+    { id: 29, title: "Flighty", description: "The best flight tracker. Real-time updates, delay predictions, and beautiful design.", category: "apps", url: "https://flighty.com", tags: ["travel", "flights", "paid"], featured: false },
+    { id: 30, title: "Structured", description: "Visual daily planner that combines your tasks and calendar into one timeline.", category: "apps", url: "https://structured.app", tags: ["planning", "calendar", "freemium"], featured: false },
+    { id: 31, title: "Reeder 5", description: "The best RSS reader on iPhone. Clean reading experience with no distractions.", category: "apps", url: "https://reederapp.com", tags: ["reading", "rss", "paid"], featured: false },
+    { id: 32, title: "Halide Camera", description: "Pro-level manual camera controls on iPhone. RAW capture, depth, and more.", category: "apps", url: "https://halide.cam", tags: ["photography", "camera", "paid"], featured: false },
+  ];
+
+  const CATEGORY_META = {
+    shortcuts: { title: "Shortcuts", sub: "iPhone shortcuts to automate your life." },
+    ai_prompts: { title: "AI Prompts", sub: "Tested prompts that actually deliver results." },
+    websites: { title: "Websites", sub: "Bookmarks worth keeping." },
+    tools: { title: "Tools", sub: "Software that makes everything faster." },
+    products: { title: "Products", sub: "Hardware and gear worth the money." },
+    apps: { title: "Apps", sub: "Applications that earn their home screen spot." },
+  };
+
+  const CATEGORY_ORDER = ["shortcuts", "ai_prompts", "websites", "tools", "products", "apps"];
+
+  // ── STATE ──
+  let activeFilter = "all";
+  let searchQuery = "";
+  let userResources = JSON.parse(localStorage.getItem("hub_resources") || "[]");
+  let nextId = 100;
+
+  function allResources() {
+    return [...RESOURCES, ...userResources];
+  }
+
+  // ── RENDER ──
+  function render() {
+    const q = searchQuery.toLowerCase();
+    const all = allResources();
+
+    const filtered = all.filter(r => {
+      const matchCat = activeFilter === "all" || r.category === activeFilter;
+      const matchSearch = !q ||
+        r.title?.toLowerCase().includes(q) ||
+        r.description?.toLowerCase().includes(q) ||
+        r.tags?.some(t => t.toLowerCase().includes(q));
+      return matchCat && matchSearch;
+    });
+
+    const cats = activeFilter === "all" ? CATEGORY_ORDER : [activeFilter];
+    const content = document.getElementById("mainContent");
+
+    const sections = cats.map(cat => {
+      const items = filtered.filter(r => r.category === cat);
+      if (!items.length) return "";
+      const meta = CATEGORY_META[cat] || { title: cat, sub: "" };
+      return `
+        <section class="section" id="${cat}">
+          <div class="section-head">
+            <h2 class="section-title">${meta.title}</h2>
+            <p class="section-sub">${meta.sub}</p>
+          </div>
+          <div class="grid">
+            ${items.map(cardHTML).join("")}
+          </div>
+        </section>
+      `;
+    }).join("");
+
+    content.innerHTML = sections || `
+      <div class="empty">
+        <p class="empty-title">No resources found.</p>
+        <p class="empty-sub">Try adjusting your search or filters.</p>
+      </div>
+    `;
+  }
+
+  function cardHTML(r) {
+    const iconContent = r.image_url
+      ? `<img src="${r.image_url}" alt="" />`
+      : `<span>${(r.title || "?").charAt(0).toUpperCase()}</span>`;
+
+    const tags = (r.tags || []).slice(0, 2).map(t => `<span class="tag">${t}</span>`).join("");
+
+    const starSVG = r.featured ? `
+      <svg class="card-featured-star" viewBox="0 0 24 24" stroke="none">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+      </svg>` : "";
+
+    const arrowSVG = r.url ? `
+      <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
+      </svg>` : "";
+
+    const tag = r.url ? "a" : "div";
+    const href = r.url ? `href="${r.url}" target="_blank" rel="noopener noreferrer"` : "";
+
+    return `
+      <${tag} class="card" ${href}>
+        ${starSVG}
+        <div class="card-icon">${iconContent}</div>
+        <div class="card-title">${r.title}</div>
+        ${r.description ? `<div class="card-desc">${r.description}</div>` : ""}
+        <div class="card-footer">
+          ${tags}
+          ${arrowSVG}
+        </div>
+      </${tag}>
+    `;
+  }
+
+  // ── FILTER ──
+  function setFilter(value, btn) {
+    activeFilter = value;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    render();
+  }
+
+  // ── SEARCH ──
+  function onSearch(value) {
+    searchQuery = value;
+    render();
+  }
+
+  // ── SCROLL ──
+  function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Set filter then scroll after render
+      activeFilter = "all";
+      document.querySelectorAll(".filter-btn").forEach((b, i) => {
+        b.classList.toggle("active", i === 0);
+      });
+      render();
+      setTimeout(() => {
+        const el2 = document.getElementById(id);
+        if (el2) el2.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    }
+  }
+
+  // ── MODAL ──
+  function openModal() {
+    document.getElementById("modalOverlay").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    document.getElementById("modalOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+    document.getElementById("submitForm").reset();
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById("modalOverlay")) closeModal();
+  }
+
+  // ── SUBMIT ──
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+
+    const title = document.getElementById("f-title").value.trim();
+    const category = document.getElementById("f-category").value;
+    const url = document.getElementById("f-url").value.trim();
+    const desc = document.getElementById("f-desc").value.trim();
+    const tagsRaw = document.getElementById("f-tags").value.trim();
+    const tags = tagsRaw ? tagsRaw.split(",").map(t => t.trim()).filter(Boolean) : [];
+
+    const newResource = { id: nextId++, title, category, url, description: desc, tags, featured: false };
+    userResources.push(newResource);
+    localStorage.setItem("hub_resources", JSON.stringify(userResources));
+
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = "Submit Resource";
+      closeModal();
+      render();
+      showToast("Resource added");
+    }, 400);
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 3000);
+  }
+
+  // ── INIT ──
+  render();
+</script>
 </body>
 </html>
