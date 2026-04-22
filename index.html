@@ -391,6 +391,23 @@
       overflow: hidden;
     }
 
+    /* ── PROMPT INLINE TEXT ── */
+    .card-prompt-text {
+      margin-top: 10px;
+      font-size: 11.5px;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+      color: var(--muted-fg);
+      background: var(--muted);
+      border-radius: 8px;
+      padding: 8px 10px;
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+    }
+
     .card-footer {
       margin-top: 14px;
       display: flex;
@@ -407,6 +424,42 @@
       background: var(--muted);
       color: var(--muted-fg);
     }
+
+    /* ── PROMPT ACTION BUTTONS ── */
+    .prompt-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .prompt-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: inherit;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, opacity 0.15s;
+      text-decoration: none;
+    }
+
+    .prompt-btn-copy {
+      background: var(--muted);
+      color: var(--muted-fg);
+    }
+    .prompt-btn-copy:hover { background: var(--border); color: var(--fg); }
+    .prompt-btn-copy.copied { background: rgba(16,217,176,0.12); color: #0aaa8a; }
+
+    .prompt-btn-link {
+      background: var(--fg);
+      color: #fff;
+    }
+    .prompt-btn-link:hover { opacity: 0.82; }
 
     .card-arrow {
       margin-left: auto;
@@ -501,6 +554,14 @@
       letter-spacing: 0.07em;
       margin-bottom: 6px;
     }
+    .form-label-hint {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(107,114,128,0.55);
+      text-transform: none;
+      letter-spacing: 0;
+      margin-left: 4px;
+    }
     .form-input, .form-select, .form-textarea {
       width: 100%;
       background: var(--muted);
@@ -521,6 +582,28 @@
     }
     .form-textarea { resize: none; height: 90px; line-height: 1.5; }
     .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+
+    /* ── PROMPT EXTRA FIELDS ── */
+    .prompt-fields {
+      display: none;
+      border: 1px solid rgba(99,102,241,0.18);
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+      background: rgba(99,102,241,0.03);
+    }
+    .prompt-fields.visible { display: block; }
+    .prompt-fields-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
     .form-submit {
       width: 100%;
@@ -580,22 +663,6 @@
       max-width: 360px;
       line-height: 1.6;
     }
-
-    /* ── SKELETON ── */
-    .skeleton {
-      background: linear-gradient(90deg, var(--muted) 25%, var(--border) 50%, var(--muted) 75%);
-      background-size: 200% 100%;
-      animation: shimmer 1.5s infinite;
-      border-radius: 8px;
-    }
-    @keyframes shimmer {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-    .skeleton-card {
-      height: 140px;
-      border-radius: var(--radius);
-    }
   </style>
 </head>
 <body>
@@ -608,7 +675,7 @@
         <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
       </svg>
     </div>
-    <span class="nav-logo-text">thehub</span>
+    <span class="nav-logo-text">CattoLoL</span>
   </a>
 
   <div class="nav-links">
@@ -675,7 +742,7 @@
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
         </svg>
       </div>
-      <span class="nav-logo-text" style="font-size:14px;">thehub</span>
+      <span class="nav-logo-text" style="font-size:14px;">CattoLoL</span>
     </a>
     <p class="footer-text">A curated collection of digital resources. Built for people who value their time.</p>
   </div>
@@ -692,14 +759,14 @@
       </button>
     </div>
 
-    <form id="submitForm" onsubmit="handleSubmit(event)">
+    <div id="submitForm">
       <div class="form-group">
         <label class="form-label">Title</label>
-        <input class="form-input" type="text" id="f-title" required placeholder="Resource name" />
+        <input class="form-input" type="text" id="f-title" placeholder="Resource name" />
       </div>
       <div class="form-group">
         <label class="form-label">Category</label>
-        <select class="form-select" id="f-category" required>
+        <select class="form-select" id="f-category" onchange="onCategoryChange(this.value)">
           <option value="" disabled selected>Select a category</option>
           <option value="shortcuts">Shortcuts</option>
           <option value="ai_prompts">AI Prompts</option>
@@ -709,10 +776,29 @@
           <option value="apps">Apps</option>
         </select>
       </div>
-      <div class="form-group">
-        <label class="form-label">URL</label>
+
+      <!-- Standard URL (non-prompt categories) -->
+      <div class="form-group" id="url-field">
+        <label class="form-label">URL <span class="form-label-hint">optional</span></label>
         <input class="form-input" type="url" id="f-url" placeholder="https://..." />
       </div>
+
+      <!-- AI Prompt-specific fields -->
+      <div class="prompt-fields" id="prompt-fields">
+        <div class="prompt-fields-label">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          AI Prompt Details
+        </div>
+        <div class="form-group" style="margin-bottom:12px;">
+          <label class="form-label">Prompt URL <span class="form-label-hint">link where this prompt lives</span></label>
+          <input class="form-input" type="url" id="f-prompt-url" placeholder="https://chatgpt.com/share/... or any link" />
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label">Prompt Text <span class="form-label-hint">optional — lets visitors copy it directly</span></label>
+          <textarea class="form-textarea" id="f-prompt-text" placeholder="Paste the full prompt here…" style="height:80px;"></textarea>
+        </div>
+      </div>
+
       <div class="form-group">
         <label class="form-label">Description</label>
         <textarea class="form-textarea" id="f-desc" placeholder="What does it do? Why is it useful?"></textarea>
@@ -721,8 +807,8 @@
         <label class="form-label">Tags</label>
         <input class="form-input" type="text" id="f-tags" placeholder="automation, free, productivity (comma separated)" />
       </div>
-      <button type="submit" class="form-submit" id="submitBtn">Submit Resource</button>
-    </form>
+      <button type="button" class="form-submit" id="submitBtn" onclick="handleSubmit()">Submit Resource</button>
+    </div>
   </div>
 </div>
 
@@ -735,27 +821,27 @@
     // SHORTCUTS
     { id: 2, title: "Toolbox", description: "Extract Text, Remove Background, Combine Images, Overlay Text, Create GIF from Images, and more", category: "shortcuts", url: "https://www.icloud.com/shortcuts/2257e98480c440e4ab34cc2eaa640a55", tags: ["media", "useful", "editing"], featured: true },
     // AI PROMPTS
-    { id: 7, title: "GTA Photos", description: "Make any image look straight out of GTA", category: "ai_prompts", tags: ["photos", "editing", "gpt"], featured: true },
+    {
+      id: 7,
+      title: "GTA Photos",
+      description: "Make any image look straight out of GTA — gritty, cinematic, and hyper-stylized.",
+      category: "ai_prompts",
+      url: "",  // ← paste your share link here
+      prompt_text: "Transform this photo into the art style of Grand Theft Auto V — bold outlines, hyper-saturated colors, dramatic lighting, and a cinematic wide-angle composition. Keep the subject recognizable but stylize everything to match Rockstar Games' signature aesthetic.",
+      tags: ["photos", "editing", "gpt"],
+      featured: false
+    },
     // WEBSITES
-    { id: 13, title: "Perplexity", description: "AI-powered answer engine that provides cited, accurate responses to complex questions.", category: "websites", url: "https://perplexity.ai", tags: ["ai", "research", "search"], featured: true },
+    { id: 13, title: "Windows93", description: "Retro emulation of Windows 93", category: "websites", url: "https://www.windows93.net", tags: ["fun", "research", "search"], featured: true },
     // TOOLS
-    { id: 18, title: "Raycast", description: "Spotlight replacement for Mac. Launch apps, run scripts, manage clipboard, and more.", category: "tools", url: "https://raycast.com", tags: ["mac", "productivity", "launcher"], featured: true },
+    { id: 18, title: "Image Tools", description: "Spotlight replacement for Mac. Launch apps, run scripts, manage clipboard, and more.", category: "tools", url: "hhttps://freetoolsuite.com/categories/image-tools", tags: ["images", "editing", "hub"], featured: false },
     { id: 19, title: "Arc Browser", description: "A browser that thinks differently. Spaces, split views, and built-in tools.", category: "tools", url: "https://arc.net", tags: ["browser", "productivity", "free"], featured: true },
     { id: 20, title: "Excalidraw", description: "Virtual whiteboard for sketching hand-drawn like diagrams. Simple, fast, collaborative.", category: "tools", url: "https://excalidraw.com", tags: ["design", "whiteboard", "free"], featured: false },
-    { id: 21, title: "Linear", description: "Project management built for speed. Keyboard-first, beautiful, and fast.", category: "tools", url: "https://linear.app", tags: ["project-management", "team", "paid"], featured: false },
     { id: 22, title: "Warp Terminal", description: "A modern terminal with AI command completion, collaboration, and a beautiful UI.", category: "tools", url: "https://warp.dev", tags: ["terminal", "mac", "developer"], featured: false },
     // PRODUCTS
-    { id: 23, title: "AirPods Pro 2", description: "Best-in-class noise cancellation, spatial audio, and seamless Apple ecosystem integration.", category: "products", url: "https://apple.com/airpods-pro", tags: ["audio", "apple", "premium"], featured: true },
-    { id: 24, title: "Bellroy Slim Wallet", description: "Minimal leather wallet that holds everything without the bulk. Fits in any pocket.", category: "products", url: "https://bellroy.com", tags: ["edc", "minimal", "leather"], featured: false },
-    { id: 25, title: "Peak Design Phone Case", description: "The most versatile iPhone case. Connects to a whole ecosystem of mounts and accessories.", category: "products", url: "https://peakdesign.com", tags: ["iphone", "gear", "premium"], featured: false },
-    { id: 26, title: "MagSafe Battery Pack", description: "Snap-on wireless charging that fits perfectly in your pocket. No cables needed.", category: "products", url: "https://apple.com", tags: ["apple", "battery", "wireless"], featured: false },
+    { id: 23, title: "Flowtica", description: "A pen that takes AI notes in class or in meetings.", category: "products", url: "https://www.flowtica.ai/", tags: ["tools", "ai", "notes"], featured: true },
     // APPS
-    { id: 27, title: "Notion", description: "All-in-one workspace for notes, docs, wikis, and project management.", category: "apps", url: "https://notion.so", tags: ["productivity", "notes", "freemium"], featured: true },
-    { id: 28, title: "Things 3", description: "The gold standard of task management on Apple platforms. Clean, focused, powerful.", category: "apps", url: "https://culturedcode.com/things", tags: ["tasks", "apple", "paid"], featured: true },
-    { id: 29, title: "Flighty", description: "The best flight tracker. Real-time updates, delay predictions, and beautiful design.", category: "apps", url: "https://flighty.com", tags: ["travel", "flights", "paid"], featured: false },
-    { id: 30, title: "Structured", description: "Visual daily planner that combines your tasks and calendar into one timeline.", category: "apps", url: "https://structured.app", tags: ["planning", "calendar", "freemium"], featured: false },
-    { id: 31, title: "Reeder 5", description: "The best RSS reader on iPhone. Clean reading experience with no distractions.", category: "apps", url: "https://reederapp.com", tags: ["reading", "rss", "paid"], featured: false },
-    { id: 32, title: "Halide Camera", description: "Pro-level manual camera controls on iPhone. RAW capture, depth, and more.", category: "apps", url: "https://halide.cam", tags: ["photography", "camera", "paid"], featured: false },
+    { id: 27, title: "(Not Boring) Camera", description: "A camera that is more fun and a little more advanced.", category: "apps", url: "https://apps.apple.com/app/id6737783441", tags: ["fun", "photos", "camera"], featured: true },
   ];
 
   const CATEGORY_META = {
@@ -775,16 +861,12 @@
   let userResources = JSON.parse(localStorage.getItem("hub_resources") || "[]");
   let nextId = 100;
 
-  function allResources() {
-    return [...RESOURCES, ...userResources];
-  }
+  function allResources() { return [...RESOURCES, ...userResources]; }
 
   // ── RENDER ──
   function render() {
     const q = searchQuery.toLowerCase();
-    const all = allResources();
-
-    const filtered = all.filter(r => {
+    const filtered = allResources().filter(r => {
       const matchCat = activeFilter === "all" || r.category === activeFilter;
       const matchSearch = !q ||
         r.title?.toLowerCase().includes(q) ||
@@ -806,38 +888,55 @@
             <h2 class="section-title">${meta.title}</h2>
             <p class="section-sub">${meta.sub}</p>
           </div>
-          <div class="grid">
-            ${items.map(cardHTML).join("")}
-          </div>
-        </section>
-      `;
+          <div class="grid">${items.map(cardHTML).join("")}</div>
+        </section>`;
     }).join("");
 
     content.innerHTML = sections || `
       <div class="empty">
         <p class="empty-title">No resources found.</p>
         <p class="empty-sub">Try adjusting your search or filters.</p>
-      </div>
-    `;
+      </div>`;
   }
 
   function cardHTML(r) {
     const iconContent = r.image_url
       ? `<img src="${r.image_url}" alt="" />`
       : `<span>${(r.title || "?").charAt(0).toUpperCase()}</span>`;
-
     const tags = (r.tags || []).slice(0, 2).map(t => `<span class="tag">${t}</span>`).join("");
+    const starSVG = r.featured ? `<svg class="card-featured-star" viewBox="0 0 24 24" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>` : "";
 
-    const starSVG = r.featured ? `
-      <svg class="card-featured-star" viewBox="0 0 24 24" stroke="none">
-        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-      </svg>` : "";
+    // ── AI PROMPT CARD ──
+    if (r.category === "ai_prompts") {
+      const promptPreview = r.prompt_text
+        ? `<div class="card-prompt-text">${escapeHTML(r.prompt_text)}</div>` : "";
 
-    const arrowSVG = r.url ? `
-      <svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/>
-      </svg>` : "";
+      const copyBtn = r.prompt_text
+        ? `<button class="prompt-btn prompt-btn-copy" onclick="copyPrompt(event,${r.id})">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy prompt
+          </button>` : "";
 
+      const linkBtn = r.url
+        ? `<a class="prompt-btn prompt-btn-link" href="${r.url}" target="_blank" rel="noopener noreferrer">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open prompt
+          </a>` : "";
+
+      return `
+        <div class="card">
+          ${starSVG}
+          <div class="card-icon">${iconContent}</div>
+          <div class="card-title">${r.title}</div>
+          ${r.description ? `<div class="card-desc">${r.description}</div>` : ""}
+          ${promptPreview}
+          ${copyBtn || linkBtn ? `<div class="prompt-actions">${copyBtn}${linkBtn}</div>` : ""}
+          <div class="card-footer">${tags}</div>
+        </div>`;
+    }
+
+    // ── STANDARD CARD ──
+    const arrowSVG = r.url ? `<svg class="card-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>` : "";
     const tag = r.url ? "a" : "div";
     const href = r.url ? `href="${r.url}" target="_blank" rel="noopener noreferrer"` : "";
 
@@ -847,15 +946,31 @@
         <div class="card-icon">${iconContent}</div>
         <div class="card-title">${r.title}</div>
         ${r.description ? `<div class="card-desc">${r.description}</div>` : ""}
-        <div class="card-footer">
-          ${tags}
-          ${arrowSVG}
-        </div>
-      </${tag}>
-    `;
+        <div class="card-footer">${tags}${arrowSVG}</div>
+      </${tag}>`;
   }
 
-  // ── FILTER ──
+  function escapeHTML(s) {
+    return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  }
+
+  // ── COPY PROMPT ──
+  function copyPrompt(e, id) {
+    e.preventDefault(); e.stopPropagation();
+    const r = allResources().find(x => x.id === id);
+    if (!r?.prompt_text) return;
+    navigator.clipboard.writeText(r.prompt_text).then(() => {
+      const btn = e.currentTarget;
+      btn.classList.add("copied");
+      btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+      setTimeout(() => {
+        btn.classList.remove("copied");
+        btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy prompt`;
+      }, 2000);
+    });
+  }
+
+  // ── FILTER / SEARCH / SCROLL ──
   function setFilter(value, btn) {
     activeFilter = value;
     document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
@@ -863,29 +978,15 @@
     render();
   }
 
-  // ── SEARCH ──
-  function onSearch(value) {
-    searchQuery = value;
-    render();
-  }
+  function onSearch(value) { searchQuery = value; render(); }
 
-  // ── SCROLL ──
   function scrollToSection(id) {
     const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      // Set filter then scroll after render
-      activeFilter = "all";
-      document.querySelectorAll(".filter-btn").forEach((b, i) => {
-        b.classList.toggle("active", i === 0);
-      });
-      render();
-      setTimeout(() => {
-        const el2 = document.getElementById(id);
-        if (el2) el2.scrollIntoView({ behavior: "smooth" });
-      }, 100);
-    }
+    if (el) { el.scrollIntoView({ behavior: "smooth" }); return; }
+    activeFilter = "all";
+    document.querySelectorAll(".filter-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
+    render();
+    setTimeout(() => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); }, 100);
   }
 
   // ── MODAL ──
@@ -897,49 +998,60 @@
   function closeModal() {
     document.getElementById("modalOverlay").classList.remove("open");
     document.body.style.overflow = "";
-    document.getElementById("submitForm").reset();
+    ["f-title","f-url","f-desc","f-tags","f-prompt-url","f-prompt-text"].forEach(id => {
+      const el = document.getElementById(id); if (el) el.value = "";
+    });
+    document.getElementById("f-category").value = "";
+    document.getElementById("prompt-fields").classList.remove("visible");
+    document.getElementById("url-field").style.display = "";
   }
 
   function handleOverlayClick(e) {
     if (e.target === document.getElementById("modalOverlay")) closeModal();
   }
 
-  // ── SUBMIT ──
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = document.getElementById("submitBtn");
-    btn.disabled = true;
-    btn.textContent = "Submitting...";
+  function onCategoryChange(val) {
+    const isPrompt = val === "ai_prompts";
+    document.getElementById("prompt-fields").classList.toggle("visible", isPrompt);
+    document.getElementById("url-field").style.display = isPrompt ? "none" : "";
+  }
 
+  // ── SUBMIT ──
+  function handleSubmit() {
     const title = document.getElementById("f-title").value.trim();
     const category = document.getElementById("f-category").value;
-    const url = document.getElementById("f-url").value.trim();
-    const desc = document.getElementById("f-desc").value.trim();
-    const tagsRaw = document.getElementById("f-tags").value.trim();
-    const tags = tagsRaw ? tagsRaw.split(",").map(t => t.trim()).filter(Boolean) : [];
+    if (!title || !category) { showToast("Please fill in title and category"); return; }
 
-    const newResource = { id: nextId++, title, category, url, description: desc, tags, featured: false };
+    const btn = document.getElementById("submitBtn");
+    btn.disabled = true; btn.textContent = "Submitting...";
+
+    const isPrompt = category === "ai_prompts";
+    const url = isPrompt
+      ? document.getElementById("f-prompt-url").value.trim()
+      : document.getElementById("f-url").value.trim();
+    const desc = document.getElementById("f-desc").value.trim();
+    const tags = document.getElementById("f-tags").value.trim().split(",").map(t => t.trim()).filter(Boolean);
+    const promptText = isPrompt ? document.getElementById("f-prompt-text").value.trim() : "";
+
+    const newResource = { id: nextId++, title, category, tags, featured: false,
+      ...(url && { url }), ...(desc && { description: desc }), ...(promptText && { prompt_text: promptText }) };
+
     userResources.push(newResource);
     localStorage.setItem("hub_resources", JSON.stringify(userResources));
 
     setTimeout(() => {
-      btn.disabled = false;
-      btn.textContent = "Submit Resource";
-      closeModal();
-      render();
-      showToast("Resource added");
+      btn.disabled = false; btn.textContent = "Submit Resource";
+      closeModal(); render(); showToast("Resource added ✓");
     }, 400);
   }
 
   // ── TOAST ──
   function showToast(msg) {
     const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.classList.add("show");
+    t.textContent = msg; t.classList.add("show");
     setTimeout(() => t.classList.remove("show"), 3000);
   }
 
-  // ── INIT ──
   render();
 </script>
 </body>
